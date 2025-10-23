@@ -21,17 +21,24 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="flex min-h-screen bg-gradient-subtle">
       {/* Sidebar */}
-      <aside className="w-64 border-r border-border bg-card">
-        <div className="flex h-16 items-center gap-2 border-b border-border px-6">
-          <BarChart3 className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold">SurveyPro</span>
+      <aside className="w-64 border-r border-border bg-card shadow-elegant">
+        <div className="flex h-16 items-center gap-2 border-b border-border px-6 bg-gradient-primary/5">
+          <BarChart3 className="h-6 w-6 text-primary drop-shadow-glow" />
+          <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">SurveyPro</span>
         </div>
         
         <nav className="space-y-1 p-4">
           <Link to="/builder">
-            <Button variant="gradient" size="lg" className="w-full mb-4">
+            <Button variant="gradient" size="lg" className="w-full mb-4 shadow-glow">
               <Plus className="h-5 w-5" />
               New Survey
+            </Button>
+          </Link>
+          
+          <Link to="/templates">
+            <Button variant="outline" className="w-full mb-4">
+              <FileText className="h-4 w-4" />
+              Templates
             </Button>
           </Link>
           
@@ -44,8 +51,8 @@ const Layout = ({ children }: LayoutProps) => {
                 <Button
                   variant="ghost"
                   className={cn(
-                    "w-full justify-start",
-                    isActive && "bg-accent text-accent-foreground"
+                    "w-full justify-start transition-all duration-200",
+                    isActive && "bg-primary/10 text-primary font-medium border-l-2 border-primary"
                   )}
                 >
                   <Icon className="h-5 w-5" />

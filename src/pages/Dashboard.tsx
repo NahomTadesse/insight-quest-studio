@@ -93,7 +93,7 @@ const Dashboard = () => {
       <div className="p-8 space-y-8 animate-fade-in">
         {/* Header */}
         <div>
-          <h1 className="text-4xl font-bold mb-2">Dashboard</h1>
+          <h1 className="text-4xl font-bold mb-2 bg-gradient-primary bg-clip-text text-transparent">Dashboard</h1>
           <p className="text-muted-foreground text-lg">
             Welcome back! Here's an overview of your surveys and analytics.
           </p>
@@ -104,7 +104,7 @@ const Dashboard = () => {
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
-              <Card key={index} className="hover:shadow-md transition-shadow animate-slide-up">
+              <Card key={index} className="hover:shadow-elegant transition-all duration-300 animate-slide-up border-t-2 border-t-primary/30">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground">
                     {stat.title}
@@ -123,8 +123,8 @@ const Dashboard = () => {
         {/* Surveys Section */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-semibold">Recent Surveys</h2>
-            <Button onClick={() => navigate("/builder")} variant="gradient">
+            <h2 className="text-2xl font-semibold bg-gradient-primary bg-clip-text text-transparent">Recent Surveys</h2>
+            <Button onClick={() => navigate("/builder")} variant="gradient" className="shadow-glow">
               Create New Survey
             </Button>
           </div>

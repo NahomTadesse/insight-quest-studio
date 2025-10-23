@@ -6,7 +6,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
 import SurveyBuilder from "./pages/SurveyBuilder";
+import Surveys from "./pages/Surveys";
 import Analytics from "./pages/Analytics";
+import Settings from "./pages/Settings";
+import Templates from "./pages/Templates";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -20,10 +23,13 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/surveys" element={<Surveys />} />
           <Route path="/builder" element={<SurveyBuilder />} />
           <Route path="/builder/:id" element={<SurveyBuilder />} />
+          <Route path="/templates" element={<Templates />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/analytics/:id" element={<Analytics />} />
+          <Route path="/settings" element={<Settings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

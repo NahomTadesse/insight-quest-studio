@@ -24,6 +24,9 @@ import {
   Trash2,
   Type,
   Star,
+  Copy,
+  GitBranch,
+  Eye,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -96,7 +99,7 @@ const SurveyBuilder = () => {
             <Input
               value={surveyTitle}
               onChange={(e) => setSurveyTitle(e.target.value)}
-              className="text-3xl font-bold border-none px-0 focus-visible:ring-0"
+              className="text-3xl font-bold border-none px-0 focus-visible:ring-0 bg-gradient-primary bg-clip-text"
               placeholder="Survey Title"
             />
             <Textarea
@@ -107,16 +110,22 @@ const SurveyBuilder = () => {
               rows={2}
             />
           </div>
-          <Button onClick={handleSave} variant="gradient" size="lg">
-            <Save className="h-5 w-5" />
-            Save Survey
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" size="lg">
+              <Eye className="h-5 w-5" />
+              Preview
+            </Button>
+            <Button onClick={handleSave} variant="gradient" size="lg">
+              <Save className="h-5 w-5" />
+              Save Survey
+            </Button>
+          </div>
         </div>
 
         {/* Questions */}
         <div className="space-y-4">
           {questions.map((question, index) => (
-            <Card key={question.id} className="group hover:shadow-md transition-shadow">
+            <Card key={question.id} className="group hover:shadow-elegant transition-all duration-300 border-l-4 border-l-primary/30 hover:border-l-primary">
               <CardHeader className="flex flex-row items-center gap-4">
                 <GripVertical className="h-5 w-5 text-muted-foreground cursor-move" />
                 <div className="flex-1 space-y-4">
