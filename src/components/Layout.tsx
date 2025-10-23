@@ -1,0 +1,68 @@
+import { ReactNode } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { BarChart3, FileText, Home, Plus, Settings } from "lucide-react";
+import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
+
+interface LayoutProps {
+  children: ReactNode;
+}
+
+const Layout = ({ children }: LayoutProps) => {
+  const location = useLocation();
+
+  const navItems = [
+    { icon: Home, label: "Dashboard", path: "/dashboard" },
+    { icon: FileText, label: "Surveys", path: "/surveys" },
+    { icon: BarChart3, label: "Analytics", path: "/analytics" },
+    { icon: Settings, label: "Settings", path: "/settings" },
+  ];
+
+  return (
+    <div className="flex min-h-screen bg-gradient-subtle">
+      {/* Sidebar */}
+      <aside className="w-64 border-r border-border bg-card">
+        <div className="flex h-16 items-center gap-2 border-b border-border px-6">
+          <BarChart3 className="h-6 w-6 text-primary" />
+          <span className="text-xl font-bold">SurveyPro</span>
+        </div>
+        
+        <nav className="space-y-1 p-4">
+          <Link to="/builder">
+            <Button variant="gradient" size="lg" className="w-full mb-4">
+              <Plus className="h-5 w-5" />
+              New Survey
+            </Button>
+          </Link>
+          
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.path;
+            
+            return (
+              <Link key={item.path} to={item.path}>
+                <Button
+                  variant="ghost"
+                  className={cn(
+                    "w-full justify-start",
+                    isActive && "bg-accent text-accent-foreground"
+                  )}
+                >
+                  <Icon className="h-5 w-5" />
+                  {item.label}
+                </Button>
+              </Link>
+            );
+          })}
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 overflow-auto">
+        {children}
+      </main>
+    </div>
+  );
+};
+
+export default Layout;
