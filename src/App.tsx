@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import SurveyBuilder from "./pages/SurveyBuilder";
 import Surveys from "./pages/Surveys";
 import Analytics from "./pages/Analytics";
+import AdvancedAnalytics from "./pages/AdvancedAnalytics";
 import Settings from "./pages/Settings";
 import Templates from "./pages/Templates";
 import NotFound from "./pages/NotFound";
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/templates" element={<Templates />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/analytics/:id" element={<Analytics />} />
+          <Route path="/advanced-analytics" element={<AdvancedAnalytics />} />
           <Route path="/settings" element={<Settings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

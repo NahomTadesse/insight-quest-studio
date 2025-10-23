@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { BarChart3, FileText, Home, Plus, Settings } from "lucide-react";
+import { BarChart3, FileText, Home, Plus, Settings, Brain, LayoutTemplate } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +15,8 @@ const Layout = ({ children }: LayoutProps) => {
     { icon: Home, label: "Dashboard", path: "/dashboard" },
     { icon: FileText, label: "Surveys", path: "/surveys" },
     { icon: BarChart3, label: "Analytics", path: "/analytics" },
+    { icon: Brain, label: "Advanced Analytics", path: "/advanced-analytics" },
+    { icon: LayoutTemplate, label: "Templates", path: "/templates" },
     { icon: Settings, label: "Settings", path: "/settings" },
   ];
 
@@ -32,13 +34,6 @@ const Layout = ({ children }: LayoutProps) => {
             <Button variant="gradient" size="lg" className="w-full mb-4 shadow-glow">
               <Plus className="h-5 w-5" />
               New Survey
-            </Button>
-          </Link>
-          
-          <Link to="/templates">
-            <Button variant="outline" className="w-full mb-4">
-              <FileText className="h-4 w-4" />
-              Templates
             </Button>
           </Link>
           

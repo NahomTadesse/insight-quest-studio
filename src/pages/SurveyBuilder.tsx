@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
@@ -24,9 +25,17 @@ import {
   Trash2,
   Type,
   Star,
-  Copy,
-  GitBranch,
   Eye,
+  Calendar,
+  Upload,
+  Image,
+  ArrowUpDown,
+  Grid3x3,
+  Minus,
+  ToggleLeft,
+  Mail,
+  Phone,
+  Hash,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -41,8 +50,13 @@ interface Question {
 
 const SurveyBuilder = () => {
   const navigate = useNavigate();
-  const [surveyTitle, setSurveyTitle] = useState("Untitled Survey");
+  const [searchParams] = useSearchParams();
+  const templateId = searchParams.get("template");
+  const [surveyTitle, setSurveyTitle] = useState(
+    templateId ? `Survey from Template #${templateId}` : "Untitled Survey"
+  );
   const [surveyDescription, setSurveyDescription] = useState("");
+  const [showPreview, setShowPreview] = useState(false);
   const [questions, setQuestions] = useState<Question[]>([
     {
       id: "1",
@@ -61,6 +75,16 @@ const SurveyBuilder = () => {
     { value: "dropdown", label: "Dropdown", icon: ChevronDown },
     { value: "rating", label: "Rating Scale", icon: Star },
     { value: "checkbox", label: "Checkboxes", icon: ListChecks },
+    { value: "date", label: "Date/Time", icon: Calendar },
+    { value: "file-upload", label: "File Upload", icon: Upload },
+    { value: "image-choice", label: "Image Choice", icon: Image },
+    { value: "ranking", label: "Ranking", icon: ArrowUpDown },
+    { value: "matrix", label: "Matrix/Grid", icon: Grid3x3 },
+    { value: "slider", label: "Slider", icon: Minus },
+    { value: "yes-no", label: "Yes/No", icon: ToggleLeft },
+    { value: "email", label: "Email", icon: Mail },
+    { value: "phone", label: "Phone", icon: Phone },
+    { value: "number", label: "Number", icon: Hash },
   ];
 
   const addQuestion = (type: string) => {
@@ -70,7 +94,7 @@ const SurveyBuilder = () => {
       title: "Untitled Question",
       description: "",
       required: false,
-      options: type === "multiple-choice" || type === "dropdown" || type === "checkbox"
+      options: type === "multiple-choice" || type === "dropdown" || type === "checkbox" || type === "image-choice" || type === "ranking"
         ? ["Option 1", "Option 2"]
         : undefined,
     };
@@ -111,7 +135,7 @@ const SurveyBuilder = () => {
             />
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" onClick={() => setShowPreview(true)}>
               <Eye className="h-5 w-5" />
               Preview
             </Button>
@@ -216,7 +240,7 @@ const SurveyBuilder = () => {
         {/* Add Question */}
         <Card className="border-dashed">
           <CardContent className="pt-6">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {questionTypes.map((type) => {
                 const Icon = type.icon;
                 return (
@@ -224,10 +248,10 @@ const SurveyBuilder = () => {
                     key={type.value}
                     variant="outline"
                     onClick={() => addQuestion(type.value)}
-                    className="h-auto py-4 flex-col gap-2"
+                    className="h-auto py-4 flex-col gap-2 hover:border-primary hover:shadow-md transition-all"
                   >
                     <Icon className="h-6 w-6" />
-                    <span className="text-sm">{type.label}</span>
+                    <span className="text-xs text-center">{type.label}</span>
                   </Button>
                 );
               })}
@@ -235,6 +259,102 @@ const SurveyBuilder = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Preview Dialog */}
+      <Dialog open={showPreview} onOpenChange={setShowPreview}>
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">{surveyTitle}</DialogTitle>
+            {surveyDescription && (
+              <p className="text-muted-foreground">{surveyDescription}</p>
+            )}
+          </DialogHeader>
+          <div className="space-y-6 mt-4">
+            {questions.map((question, index) => (
+              <div key={question.id} className="space-y-3 p-4 border rounded-lg">
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary">{index + 1}.</span>
+                  <div className="flex-1">
+                    <h4 className="font-medium">
+                      {question.title}
+                      {question.required && <span className="text-destructive ml-1">*</span>}
+                    </h4>
+                    {question.description && (
+                      <p className="text-sm text-muted-foreground mt-1">{question.description}</p>
+                    )}
+                    <div className="mt-3">
+                      {question.type === "multiple-choice" && question.options && (
+                        <div className="space-y-2">
+                          {question.options.map((option, i) => (
+                            <div key={i} className="flex items-center gap-2">
+                              <div className="h-4 w-4 rounded-full border-2" />
+                              <span>{option}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {question.type === "checkbox" && question.options && (
+                        <div className="space-y-2">
+                          {question.options.map((option, i) => (
+                            <div key={i} className="flex items-center gap-2">
+                              <div className="h-4 w-4 rounded border-2" />
+                              <span>{option}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {question.type === "text" && (
+                        <Input placeholder="Your answer..." disabled />
+                      )}
+                      {question.type === "paragraph" && (
+                        <Textarea placeholder="Your answer..." disabled rows={3} />
+                      )}
+                      {question.type === "dropdown" && (
+                        <Select disabled>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select an option" />
+                          </SelectTrigger>
+                        </Select>
+                      )}
+                      {question.type === "rating" && (
+                        <div className="flex gap-2">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <Star key={star} className="h-6 w-6 text-muted-foreground" />
+                          ))}
+                        </div>
+                      )}
+                      {question.type === "slider" && (
+                        <Input type="range" min="0" max="100" disabled />
+                      )}
+                      {question.type === "yes-no" && (
+                        <div className="flex gap-4">
+                          <div className="flex items-center gap-2">
+                            <div className="h-4 w-4 rounded-full border-2" />
+                            <span>Yes</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="h-4 w-4 rounded-full border-2" />
+                            <span>No</span>
+                          </div>
+                        </div>
+                      )}
+                      {(question.type === "date" || question.type === "email" || question.type === "phone" || question.type === "number") && (
+                        <Input type={question.type} placeholder={`Enter ${question.type}...`} disabled />
+                      )}
+                      {question.type === "file-upload" && (
+                        <div className="border-2 border-dashed rounded-lg p-6 text-center">
+                          <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
+                          <p className="text-sm text-muted-foreground">Click to upload file</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 };
