@@ -146,7 +146,7 @@ const Dashboard = () => {
             <SurveyCard
               key={survey.id}
               {...survey}
-              onView={() => navigate(`/surveys?view=${survey.id}`)}
+              onView={() => navigate(`/survey/${survey.id}`)}
               onEdit={() => navigate(`/builder/${survey.id}`)}
               onAnalyze={() => navigate(`/analytics/${survey.id}`)}
             />
