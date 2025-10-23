@@ -102,7 +102,21 @@ const SurveyBuilder = () => {
   };
 
   const updateQuestion = (id: string, updates: Partial<Question>) => {
-    setQuestions(questions.map((q) => (q.id === id ? { ...q, ...updates } : q)));
+    setQuestions(questions.map((q) => {
+      if (q.id === id) {
+        const updatedQuestion = { ...q, ...updates };
+        // If type is changing, update options accordingly
+        if (updates.type && updates.type !== q.type) {
+          if (updates.type === "multiple-choice" || updates.type === "dropdown" || updates.type === "checkbox" || updates.type === "image-choice" || updates.type === "ranking") {
+            updatedQuestion.options = ["Option 1", "Option 2"];
+          } else {
+            updatedQuestion.options = undefined;
+          }
+        }
+        return updatedQuestion;
+      }
+      return q;
+    }));
   };
 
   const deleteQuestion = (id: string) => {

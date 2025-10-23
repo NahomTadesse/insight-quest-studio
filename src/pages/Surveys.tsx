@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -47,6 +47,7 @@ const mockSurveys = [
 ];
 
 const Surveys = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
 
@@ -115,9 +116,9 @@ const Surveys = () => {
                   <SurveyCard
                     key={survey.id}
                     {...survey}
-                    onView={() => window.open(`/builder/${survey.id}`, '_self')}
-                    onEdit={() => window.open(`/builder/${survey.id}`, '_self')}
-                    onAnalyze={() => window.open(`/analytics/${survey.id}`, '_self')}
+                    onView={() => navigate(`/surveys?view=${survey.id}`)}
+                    onEdit={() => navigate(`/builder/${survey.id}`)}
+                    onAnalyze={() => navigate(`/analytics/${survey.id}`)}
                   />
                 ))}
               </div>
