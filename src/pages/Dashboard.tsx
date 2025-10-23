@@ -142,15 +142,15 @@ const Dashboard = () => {
 
           {/* Survey Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredSurveys.map((survey) => (
-            <SurveyCard
-              key={survey.id}
-              {...survey}
-              onView={() => navigate(`/survey/${survey.id}`)}
-              onEdit={() => navigate(`/builder/${survey.id}`)}
-              onAnalyze={() => navigate(`/analytics/${survey.id}`)}
-            />
-          ))}
+            {filteredSurveys.map((survey) => (
+              <SurveyCard
+                key={survey.id}
+                {...survey}
+                onView={() => navigate(`/survey/${survey.id}`)}
+                onEdit={() => navigate(`/builder/${survey.id}`)}
+                onAnalyze={() => navigate(`/analytics/${survey.id}`)}
+              />
+            ))}
           </div>
 
           {filteredSurveys.length === 0 && (

@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
 import SurveyBuilder from "./pages/SurveyBuilder";
-import SurveyViewer from "./pages/SurveyViewer";
 import Surveys from "./pages/Surveys";
 import Analytics from "./pages/Analytics";
 import AdvancedAnalytics from "./pages/AdvancedAnalytics";
@@ -26,7 +25,6 @@ const App = () => (
           <Route path="/" element={<Landing />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/surveys" element={<Surveys />} />
-          <Route path="/survey/:id" element={<SurveyViewer />} />
           <Route path="/builder" element={<SurveyBuilder />} />
           <Route path="/builder/:id" element={<SurveyBuilder />} />
           <Route path="/templates" element={<Templates />} />
