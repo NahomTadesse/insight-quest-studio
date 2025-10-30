@@ -24,10 +24,10 @@ const Layout = ({ children }: LayoutProps) => {
     <div className="flex min-h-screen bg-gradient-subtle">
       {/* Sidebar */}
       <aside className="w-64 border-r border-border bg-card shadow-elegant">
-        <div className="flex h-16 items-center gap-2 border-b border-border px-6 bg-gradient-primary/5">
+        <Link to="/" className="flex h-16 items-center gap-2 border-b border-border px-6 bg-gradient-primary/5 hover:bg-gradient-primary/10 transition-colors cursor-pointer">
           <BarChart3 className="h-6 w-6 text-primary drop-shadow-glow" />
           <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">SurveyPro</span>
-        </div>
+        </Link>
         
         <nav className="space-y-1 p-4">
           <Link to="/builder">
